@@ -4,6 +4,7 @@ import { Button } from "~/components/button/button";
 
 import type { CountStore, Entity } from "~/routes/types";
 import { ItemProgress } from "~/components/item-progress/item-progress";
+import { Timeline } from "~/components/timeline/timeline";
 
 export default component$(() => {
   const state = useStore<CountStore>({
@@ -63,23 +64,21 @@ export default component$(() => {
   });
 
   return (
-    <>
-      <br />
+    <div class="container mx-auto">
       <Button state={state} />
-      <h2>Crafting:</h2>
-      {state.buffer.map((entity, i) => {
-        return (
-          <>
-            <p key={i}>{entity.label}</p>
-            <ItemProgress entity={entity} />
-          </>
-        );
-      })}
-      <h2>Inventory:</h2>
-      {state.inventory.map((entity, i) => {
-        return <p key={i}>{entity.label}</p>;
-      })}
-    </>
+      <div class="grid grid-cols-4 gap-4">
+        <div class="col-span-2">
+          <h3 class="text-3xl font-bold dark:text-white">Crafting:</h3>
+          <Timeline state={state} />
+        </div>
+        <div class="col-span-2">
+          <h3 class="text-3xl font-bold dark:text-white">Inventory:</h3>
+          {state.inventory.map((entity, i) => {
+            return <p key={i}>{entity.label}</p>;
+          })}
+        </div>
+      </div>
+    </div>
   );
 });
 

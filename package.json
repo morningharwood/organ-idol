@@ -42,5 +42,8 @@
     "vite": "4.4.0",
     "vite-tsconfig-paths": "4.2.0",
     "vitest": "^0.32.2"
+  },
+  "dependencies": {
+    "flowbite": "^1.8.1"
   }
 }

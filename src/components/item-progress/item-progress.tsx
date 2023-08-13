@@ -14,7 +14,6 @@ const ItemProgress = component$<ItemProgressProps>((props) => {
         class=" w-full bg-purple-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full dark:bg-purple-500"
         style={{ transform: `translateX(${currentProgress}%` }}
       />
-      {Math.floor(currentProgress)}
     </div>
   );
 });
