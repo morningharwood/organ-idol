@@ -7,13 +7,10 @@ import { Timeline } from "~/components/timeline/timeline";
 
 export default component$(() => {
   const state = useStore<CountStore>({
-    count: 0,
+    inventoryCapacity: 3,
     time: 0,
     buffer: [],
     inventory: [],
-    increment: $(function (this: CountStore) {
-      this.count++;
-    }),
     updateTime: $(function (this: CountStore, time: number) {
       this.time = time;
     }),
@@ -73,7 +70,11 @@ export default component$(() => {
         <div class="col-span-2">
           <h3 class="text-3xl font-bold dark:text-white">Inventory:</h3>
           {state.inventory.map((entity, i) => {
-            return <p key={i}>{entity.label}</p>;
+            return (
+              <p class="mb-3 text-black dark:text-white" key={i}>
+                {entity.label}
+              </p>
+            );
           })}
         </div>
       </div>
