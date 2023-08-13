@@ -3,7 +3,6 @@ import type { DocumentHead } from "@builder.io/qwik-city";
 import { Button } from "~/components/button/button";
 
 import type { CountStore, Entity } from "~/routes/types";
-import { ItemProgress } from "~/components/item-progress/item-progress";
 import { Timeline } from "~/components/timeline/timeline";
 
 export default component$(() => {
