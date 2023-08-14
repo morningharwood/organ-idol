@@ -7,6 +7,7 @@ type ItemProgressProps = {
 
 const ItemProgress = component$<ItemProgressProps>((props) => {
   const { entity } = props;
+
   const currentProgress = (entity.progress / entity.timeToCraft) * 100;
   return (
     <div class="overflow-x-hidden w-full bg-gray-200 rounded-full dark:bg-gray-700 w-80">

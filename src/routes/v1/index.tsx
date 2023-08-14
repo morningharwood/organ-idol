@@ -69,20 +69,20 @@ export default component$(() => {
         <div class="py-3 flex flex-col gap-3">top</div>
         <div class="py-3 flex flex-col gap-3">
           <SideNavigationButton state={state} />
-          {/*<ItemProgress entity={entity} />*/}
-          {/*<SideNavigationButton state={state} />*/}
-          {/*<SideNavigationButton state={state} />*/}
+
           <div class="text-white text-xs border-t border-white pt-3 justify-center">
             <p class="text-center font-bold">$300</p>
           </div>
         </div>
       </nav>
-      <main>
+      <main class=" inline-flex flex-wrap gap-2 p-8">
         {state.inventory.map((entity, i) => {
           return (
-            <p class="mb-3 text-black dark:text-white" key={i}>
-              {entity.label}
-            </p>
+            <div class="border border-white rounded w-32 h-48">
+              <p class="mb-3 text-black dark:text-white" key={i}>
+                {entity.label}
+              </p>
+            </div>
           );
         })}
       </main>
