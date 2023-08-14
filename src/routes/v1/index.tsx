@@ -4,7 +4,6 @@ import type { DocumentHead } from "@builder.io/qwik-city";
 import type { CountStore, Entity } from "~/routes/types";
 
 import { SideNavigationButton } from "~/components/button/side-navigation-button";
-import { ItemProgress } from "~/components/item-progress/item-progress";
 
 export default component$(() => {
   const state = useStore<CountStore>({
@@ -78,7 +77,7 @@ export default component$(() => {
       <main class=" inline-flex flex-wrap gap-2 p-8">
         {state.inventory.map((entity, i) => {
           return (
-            <div class="border border-white rounded w-32 h-48">
+            <div class="border border-white rounded w-32 h-48" key={i}>
               <p class="mb-3 text-black dark:text-white" key={i}>
                 {entity.label}
               </p>
