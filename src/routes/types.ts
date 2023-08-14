@@ -4,6 +4,7 @@ export type CountStore = {
   inventoryCapacity: number;
   buffer: Entity[];
   inventory: Entity[];
+  upgrades: string[];
   time: number;
   addEntityToBuffer: QRL<(this: CountStore, entity: Entity) => void>;
   removeEntityFromBuffer: QRL<(this: CountStore) => void>;
