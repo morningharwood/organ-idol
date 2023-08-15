@@ -90,32 +90,6 @@ export default component$(() => {
   );
 });
 
-/**
- *  <div class={"h-full w-full grid grid-cols-[58px_auto] "}>
- *       <nav class="border-r border-white h-full grid grid-rows-[1fr_auto] justify-center">
- *         <div class="py-3 flex flex-col gap-3">top</div>
- *         <div class="py-3 flex flex-col gap-3">
- *           <SideNavigationButton state={state} />
- *
- *           <div class="text-white text-xs border-t border-white pt-3 justify-center">
- *             <p class="text-center font-bold">$300</p>
- *           </div>
- *         </div>
- *       </nav>
- *       <main class="flex flex-wrap gap-2 p-8 overflow-y-auto">
- *         {state.inventory.map((entity, i) => {
- *           return (
- *             <div class="border border-white rounded w-32 h-48" key={i}>
- *               <p class="mb-3 text-black dark:text-white" key={i}>
- *                 {entity.label}
- *               </p>
- *             </div>
- *           );
- *         })}
- *       </main>
- *     </div>
- */
-
 export const head: DocumentHead = {
   title: "Wet Labs Market",
   meta: [
