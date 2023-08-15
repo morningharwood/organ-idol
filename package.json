@@ -47,7 +47,6 @@
     "wrangler": "^3.0.0"
   },
   "dependencies": {
-    "@faker-js/faker": "^8.0.2",
     "flowbite": "^1.8.1",
     "just-range": "^4.2.0",
     "just-shuffle": "^4.2.0"

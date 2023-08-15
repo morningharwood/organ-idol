@@ -3,7 +3,6 @@ import type { CountStore, Entity } from "~/routes/types";
 import { ItemProgress } from "~/components/item-progress/item-progress";
 import range from "just-range";
 import shuffle from "just-shuffle";
-import { faker } from "@faker-js/faker";
 type ButtonProps = {
   state: CountStore;
 };
@@ -18,7 +17,7 @@ const SideNavigationButton = component$<ButtonProps>((props) => {
     const sellValue = attack * rarity() + defense * rarity() * defaultValue;
     return {
       id: crypto.randomUUID(),
-      label: faker.animal.type(),
+      label: "Apple",
       timeToCraft: 1000,
       status: "pending",
       startTime: 0,
