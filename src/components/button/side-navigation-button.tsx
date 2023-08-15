@@ -17,7 +17,7 @@ const SideNavigationButton = component$<ButtonProps>((props) => {
     const sellValue = attack * rarity() + defense * rarity() * defaultValue;
     return {
       id: crypto.randomUUID(),
-      label: "Apple",
+      label: "Leather Headpiece",
       timeToCraft: 1000,
       status: "pending",
       startTime: 0,
@@ -25,6 +25,7 @@ const SideNavigationButton = component$<ButtonProps>((props) => {
       defense,
       progress: 0,
       sellValue,
+      equipmentType: "head",
     };
   });
   return (

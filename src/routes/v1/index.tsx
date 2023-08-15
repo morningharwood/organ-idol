@@ -4,6 +4,8 @@ import type { DocumentHead } from "@builder.io/qwik-city";
 import type { ActivePanelT, CountStore, Entity } from "~/routes/types";
 import { SideNavigationButton } from "~/components/button/side-navigation-button";
 import { LabPanel } from "~/components/panels/lab-panel";
+import { EquipPanel } from "~/components/panels/equip-panel";
+import { InitStateEquipment } from "~/data/init-state";
 
 export default component$(() => {
   const state = useStore<CountStore>({
@@ -14,8 +16,14 @@ export default component$(() => {
     money: 0,
     time: 0,
     buffer: [],
+    equipment: InitStateEquipment,
     inventory: [],
     upgrades: [],
+    updateEquipment: $(function (this: CountStore, entity: Entity) {
+      this.removeItemFromInventory(entity).then(() => {
+        this.equipment[entity.equipmentType] = entity;
+      });
+    }),
     updateActivePanel: $(function (this: CountStore, panel: ActivePanelT) {
       this.activePanel = panel;
     }),
@@ -23,8 +31,9 @@ export default component$(() => {
       this.time = time;
     }),
     sellItem: $(function (this: CountStore, entity: Entity) {
-      this.money += entity.sellValue;
-      this.removeItemFromInventory(entity);
+      this.removeItemFromInventory(entity).then(() => {
+        this.money += entity.sellValue;
+      });
     }),
     removeItemFromInventory: $(function (this: CountStore, entity: Entity) {
       const selectedEntity = this.inventory.find((e) => {
@@ -133,6 +142,7 @@ export default component$(() => {
       </nav>
       <main class="overflow-y-auto">
         {state.activePanel === "lab" ? <LabPanel state={state} /> : null}
+        {state.activePanel === "equip" ? <EquipPanel state={state} /> : null}
       </main>
     </div>
   );
