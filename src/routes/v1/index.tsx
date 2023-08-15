@@ -4,10 +4,15 @@ import type { DocumentHead } from "@builder.io/qwik-city";
 import type { CountStore, Entity } from "~/routes/types";
 
 import { SideNavigationButton } from "~/components/button/side-navigation-button";
+import { SellButton } from "~/components/button/sell-button";
+import { EquipButton } from "~/components/button/equip-button";
 
 export default component$(() => {
   const state = useStore<CountStore>({
+    attack: 0,
+    defense: 0,
     inventoryCapacity: 3,
+    money: 0,
     time: 0,
     buffer: [],
     inventory: [],
@@ -15,13 +20,23 @@ export default component$(() => {
     updateTime: $(function (this: CountStore, time: number) {
       this.time = time;
     }),
+    sellItem: $(function (this: CountStore, entity: Entity) {
+      this.money += entity.sellValue;
+      this.removeItemFromInventory(entity);
+    }),
+    removeItemFromInventory: $(function (this: CountStore, entity: Entity) {
+      console.log("hello");
+      this.inventory = this.inventory.filter((e: Entity) => {
+        return e.id !== entity.id;
+      });
+    }),
     addEntityToBuffer: $(function (this: CountStore, entity: Entity) {
       this.buffer.push(entity);
-      console.log(this.buffer);
+      console.log("add", this.buffer);
     }),
     removeEntityFromBuffer: $(function (this: CountStore) {
       this.buffer.shift();
-      console.log(this.buffer);
+      console.log("remove", this.buffer);
     }),
     addEntityToInventory: $(function (this: CountStore, entity: Entity) {
       this.inventory.push(entity);
@@ -71,7 +86,7 @@ export default component$(() => {
           <SideNavigationButton state={state} />
 
           <div class="text-white text-xs border-t border-white pt-3 justify-center">
-            <p class="text-center font-bold">$300</p>
+            <p class="text-center font-bold">${state.money}</p>
           </div>
         </div>
       </nav>
@@ -79,8 +94,18 @@ export default component$(() => {
         <div class="flex flex-wrap gap-4 p-4">
           {state.inventory.map((entity, i) => {
             return (
-              <div class="border border-white rounded w-32 h-48" key={i}>
-                <p class="mb-3 text-black dark:text-white">{entity.label}</p>
+              <div
+                class="border border-white rounded-xl w-32 h-48 px-2 py-4"
+                key={i}
+              >
+                <div class="border border-white rounded-full w-9 h-9 m-auto"></div>
+                <p class="mb-3 text-black dark:text-white text-center">
+                  {entity.attack} &gt; {state.attack}
+                </p>
+                <div class="flex gap-3 justify-center">
+                  <SellButton state={state} inventoryEntity={entity} />
+                  <EquipButton state={state} inventoryEntity={entity} />
+                </div>
               </div>
             );
           })}

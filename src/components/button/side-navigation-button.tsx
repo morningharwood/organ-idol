@@ -1,18 +1,22 @@
 import { $, component$ } from "@builder.io/qwik";
-import type { CountStore } from "~/routes/types";
+import type { CountStore, Entity } from "~/routes/types";
 import { ItemProgress } from "~/components/item-progress/item-progress";
 type ButtonProps = {
   state: CountStore;
 };
 const SideNavigationButton = component$<ButtonProps>((props) => {
   const { state } = props;
-  const createEntity = $(() => {
+  const createEntity = $((): Entity => {
     return {
-      id: "1",
+      id: crypto.randomUUID(),
       label: "Apple",
       timeToCraft: 1000,
       status: "pending",
       startTime: 0,
+      attack: 4,
+      defense: 0,
+      progress: 0,
+      sellValue: 100,
     };
   });
   return (
