@@ -18,7 +18,12 @@ export type CountStore = {
   updateTime: QRL<(this: CountStore, time: number) => void>;
   addEntityToInventory: QRL<(this: CountStore, entity: Entity) => void>;
 };
-export type Status = "pending" | "executing" | "done";
+export type Status =
+  | "pending"
+  | "executing"
+  | "animate_out"
+  | "animate_in"
+  | "done";
 export type Entity = {
   id: string;
   label: string;

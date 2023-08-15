@@ -27,9 +27,15 @@ export default component$(() => {
       this.removeItemFromInventory(entity);
     }),
     removeItemFromInventory: $(function (this: CountStore, entity: Entity) {
-      this.inventory = this.inventory.filter((e: Entity) => {
-        return e.id !== entity.id;
-      });
+      const selectedEntity = this.inventory.find((e) => {
+        return e.id === entity.id;
+      }) || { status: "" };
+      selectedEntity.status = "animate_out";
+      setTimeout(() => {
+        this.inventory = this.inventory.filter((e: Entity) => {
+          return e.id !== entity.id;
+        });
+      }, 1000);
     }),
     addEntityToBuffer: $(function (this: CountStore, entity: Entity) {
       this.buffer.push(entity);
@@ -44,7 +50,7 @@ export default component$(() => {
   });
 
   useVisibleTask$(({ cleanup }) => {
-    let id: number | null = null;
+    let id: number;
     const execute = (entity: Entity, t: DOMHighResTimeStamp) => {
       if (entity.status === "pending") {
         entity.status = "executing";
@@ -59,6 +65,7 @@ export default component$(() => {
           entity.status = "done";
         }
       }
+
       if (entity.status === "done") {
         state.removeEntityFromBuffer();
       }
@@ -75,7 +82,9 @@ export default component$(() => {
     };
 
     id = window.requestAnimationFrame(tick);
-    cleanup(() => window.cancelAnimationFrame(id as number));
+    cleanup(() => {
+      window.cancelAnimationFrame(id as number);
+    });
   });
 
   return (

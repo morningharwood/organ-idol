@@ -10,11 +10,17 @@ export type LabPanelT = {
 const LabPanel = component$<LabPanelT>((props) => {
   const { state } = props;
   return (
-    <div class="flex flex-wrap gap-4 p-4 ">
+    <div class={`flex flex-wrap gap-4 p-4`}>
       {state.inventory.map((entity, i) => {
         return (
           <div
-            class="border border-white rounded-xl w-32 h-48 px-2 py-4"
+            class={`border border-white rounded-xl w-32 h-48 px-2 py-4 opacity-0 ${
+              entity.status === "done"
+                ? "animate-fade-in"
+                : entity.status === "animate_out"
+                ? "animate-fade-out"
+                : null
+            }`}
             key={i}
           >
             <div class="border border-white rounded-full w-9 h-9 m-auto"></div>
