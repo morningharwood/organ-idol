@@ -1,11 +1,12 @@
 import { $, component$, useStore, useVisibleTask$ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 
-import type { ActivePanelT, CountStore, Entity } from "~/routes/types";
+import type { ActivePanelT, CountStore, Entity, Status } from "~/routes/types";
 import { SideNavigationButton } from "~/components/button/side-navigation-button";
 import { LabPanel } from "~/components/panels/lab-panel";
 import { EquipPanel } from "~/components/panels/equip-panel";
 import { InitStateEquipment } from "~/data/init-state";
+import { delay$ } from "~/hooks/delay";
 
 export default component$(() => {
   const state = useStore<CountStore>({
@@ -35,16 +36,22 @@ export default component$(() => {
         this.money += entity.sellValue;
       });
     }),
+    setStatus: $(function (entity: Entity, newStatus: Status) {
+      entity.status = newStatus;
+    }),
     removeItemFromInventory: $(function (this: CountStore, entity: Entity) {
       const selectedEntity = this.inventory.find((e) => {
         return e.id === entity.id;
-      }) || { status: "" };
-      selectedEntity.status = "animate_out";
-      // setTimeout(() => {
-      //   this.inventory = this.inventory.filter((e: Entity) => {
-      //     return e.id !== entity.id;
-      //   });
-      // }, 1000);
+      });
+      if (selectedEntity?.status) {
+        this.setStatus(selectedEntity, "animate_out").then(() => {
+          setTimeout(() => {
+            this.inventory = this.inventory.filter((e: Entity) => {
+              return e.id !== entity.id;
+            });
+          }, 1000);
+        });
+      }
     }),
     addEntityToBuffer: $(function (this: CountStore, entity: Entity) {
       this.buffer.push(entity);

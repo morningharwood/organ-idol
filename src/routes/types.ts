@@ -35,6 +35,7 @@ export type CountStore = {
   inventory: Entity[];
   upgrades: string[];
   time: number;
+  setStatus: QRL<(entity: Entity, setStatus: Status) => void>;
   updateEquipment: QRL<(this: CountStore, entity: Entity) => void>;
   updateActivePanel: QRL<(this: CountStore, panel: ActivePanelT) => void>;
   addEntityToBuffer: QRL<(this: CountStore, entity: Entity) => void>;
