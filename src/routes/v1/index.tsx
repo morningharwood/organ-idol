@@ -6,8 +6,6 @@ import { SideNavigationButton } from "~/components/button/side-navigation-button
 import { LabPanel } from "~/components/panels/lab-panel";
 import { EquipPanel } from "~/components/panels/equip-panel";
 import { InitStateEquipment } from "~/data/init-state";
-import { delay$ } from "~/hooks/delay";
-
 export default component$(() => {
   const state = useStore<CountStore>({
     activePanel: "lab",
