@@ -40,11 +40,11 @@ export default component$(() => {
         return e.id === entity.id;
       }) || { status: "" };
       selectedEntity.status = "animate_out";
-      setTimeout(() => {
-        this.inventory = this.inventory.filter((e: Entity) => {
-          return e.id !== entity.id;
-        });
-      }, 1000);
+      // setTimeout(() => {
+      //   this.inventory = this.inventory.filter((e: Entity) => {
+      //     return e.id !== entity.id;
+      //   });
+      // }, 1000);
     }),
     addEntityToBuffer: $(function (this: CountStore, entity: Entity) {
       this.buffer.push(entity);
