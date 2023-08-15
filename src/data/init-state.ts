@@ -12,7 +12,7 @@ const InitStateEquipmentEntity = {
 };
 const InitStateEquipment: EquipmentT = {
   head: {
-    id: crypto.randomUUID(),
+    id: "0001",
     equipmentType: "head",
     label: "Cloth helmet",
     ...InitStateEquipmentEntity,
