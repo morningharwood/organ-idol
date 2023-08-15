@@ -1,22 +1,31 @@
 import { $, component$ } from "@builder.io/qwik";
 import type { CountStore, Entity } from "~/routes/types";
 import { ItemProgress } from "~/components/item-progress/item-progress";
+import range from "just-range";
+import shuffle from "just-shuffle";
+import { faker } from "@faker-js/faker";
 type ButtonProps = {
   state: CountStore;
 };
 const SideNavigationButton = component$<ButtonProps>((props) => {
   const { state } = props;
   const createEntity = $((): Entity => {
+    const defaultValue = 100;
+    const rarity = () => shuffle(range(1, 3))[0];
+    const attack = shuffle(range(1, 4))[0];
+    const defense = shuffle(range(1, 4))[0];
+    console.log(attack, defense);
+    const sellValue = attack * rarity() + defense * rarity() * defaultValue;
     return {
       id: crypto.randomUUID(),
-      label: "Apple",
+      label: faker.animal.type(),
       timeToCraft: 1000,
       status: "pending",
       startTime: 0,
-      attack: 4,
-      defense: 0,
+      attack,
+      defense,
       progress: 0,
-      sellValue: 100,
+      sellValue,
     };
   });
   return (

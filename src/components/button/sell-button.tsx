@@ -33,7 +33,9 @@ const SellButton = component$<ButtonProps>((props) => {
         </svg>
         <span class="sr-only">Icon description</span>
       </button>
-      <div class="text-white text-center">300</div>
+      <div class="text-white text-center text-xs font-mono mt-1">
+        ${inventoryEntity.sellValue}
+      </div>
     </div>
   );
 });

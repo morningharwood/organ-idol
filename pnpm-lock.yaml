@@ -5,9 +5,18 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@faker-js/faker':
+    specifier: ^8.0.2
+    version: 8.0.2
   flowbite:
     specifier: ^1.8.1
     version: 1.8.1
+  just-range:
+    specifier: ^4.2.0
+    version: 4.2.0
+  just-shuffle:
+    specifier: ^4.2.0
+    version: 4.2.0
 
 devDependencies:
   '@builder.io/qwik':
@@ -603,6 +612,11 @@ packages:
     resolution: {integrity: sha512-Ag+9YM4ocKQx9AarydN0KY2j0ErMHNIocPDrVo8zAE44xLTjEtz81OdR68/cydGtk6m6jDb5Za3r2useMzYmSw==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
+
+  /@faker-js/faker@8.0.2:
+    resolution: {integrity: sha512-Uo3pGspElQW91PCvKSIAXoEgAUlRnH29sX2/p89kg7sP1m2PzCufHINd0FhTXQf6DYGiUlVncdSPa2F9wxed2A==}
+    engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0, npm: '>=6.14.13'}
+    dev: false
 
   /@humanwhocodes/config-array@0.11.10:
     resolution: {integrity: sha512-KVVjQmNUepDVGXNuoRRdmmEjruj0KfiGSbS8LVc12LMsWDQzRXJ0qdhN8L8uUigKpfEHRhlaQFY0ib1tnUbNeQ==}
@@ -2484,6 +2498,14 @@ packages:
       object.assign: 4.1.4
       object.values: 1.1.6
     dev: true
+
+  /just-range@4.2.0:
+    resolution: {integrity: sha512-z2Ip8H2j7a9Vr8rKFi0IZf4IXn2Yuq2lGZFS41GjfPwksoHWTaTx1xIjU6C0HyQ1jBXEoz/FzjS5eyVXeW19tg==}
+    dev: false
+
+  /just-shuffle@4.2.0:
+    resolution: {integrity: sha512-/dDmNseAWLf3XkFY9xf3/BdQoiy27LNUy/7uG4zdSAX526nIHMYPYeJ4pN4lT1/pgNEX8XCXPtUB6gJqTpBEng==}
+    dev: false
 
   /kleur@4.1.5:
     resolution: {integrity: sha512-o+NO+8WrRiQEE4/7nwRJhN1HWpVmJm511pBHUxPLtp0BUISzlBplORYSmTclCnJvQq2tKu/sgl3xVpkc7ZWuQQ==}

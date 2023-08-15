@@ -1,14 +1,13 @@
 import { $, component$, useStore, useVisibleTask$ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 
-import type { CountStore, Entity } from "~/routes/types";
-
+import type { ActivePanelT, CountStore, Entity } from "~/routes/types";
 import { SideNavigationButton } from "~/components/button/side-navigation-button";
-import { SellButton } from "~/components/button/sell-button";
-import { EquipButton } from "~/components/button/equip-button";
+import { LabPanel } from "~/components/panels/lab-panel";
 
 export default component$(() => {
   const state = useStore<CountStore>({
+    activePanel: "lab",
     attack: 0,
     defense: 0,
     inventoryCapacity: 3,
@@ -17,6 +16,9 @@ export default component$(() => {
     buffer: [],
     inventory: [],
     upgrades: [],
+    updateActivePanel: $(function (this: CountStore, panel: ActivePanelT) {
+      this.activePanel = panel;
+    }),
     updateTime: $(function (this: CountStore, time: number) {
       this.time = time;
     }),
@@ -25,7 +27,6 @@ export default component$(() => {
       this.removeItemFromInventory(entity);
     }),
     removeItemFromInventory: $(function (this: CountStore, entity: Entity) {
-      console.log("hello");
       this.inventory = this.inventory.filter((e: Entity) => {
         return e.id !== entity.id;
       });
@@ -35,8 +36,7 @@ export default component$(() => {
       console.log("add", this.buffer);
     }),
     removeEntityFromBuffer: $(function (this: CountStore) {
-      this.buffer.shift();
-      console.log("remove", this.buffer);
+      this.buffer = [...this.buffer.slice(1)];
     }),
     addEntityToInventory: $(function (this: CountStore, entity: Entity) {
       this.inventory.push(entity);
@@ -81,35 +81,49 @@ export default component$(() => {
   return (
     <div class="h-full w-full grid grid-cols-[58px_auto] overflow-hidden">
       <nav class="border-r border-white h-full grid grid-rows-[1fr_auto] justify-center">
-        <div class="py-3 flex flex-col gap-3">top</div>
+        <div class="pt-4 flex flex-col gap-3 text-[10px] text-white text-center">
+          <button
+            onClick$={() => state.updateActivePanel("lab")}
+            class={`pb-4 border-b border-white font-mono ${
+              state.activePanel === "lab"
+                ? "border-indigo-500 text-indigo-500"
+                : null
+            }`}
+          >
+            Lab
+          </button>
+          <button
+            onClick$={() => state.updateActivePanel("research")}
+            class={`pb-4 border-b border-white font-mono ${
+              state.activePanel === "research"
+                ? "border-indigo-500 text-indigo-500"
+                : null
+            }`}
+          >
+            Research
+          </button>
+          <button
+            onClick$={() => state.updateActivePanel("equip")}
+            class={`pb-4 border-b border-white font-mono ${
+              state.activePanel === "equip"
+                ? "border-indigo-500 text-indigo-500"
+                : null
+            }`}
+          >
+            Equip
+          </button>
+        </div>
         <div class="py-3 flex flex-col gap-3">
-          <SideNavigationButton state={state} />
-
+          <div class="m-auto grid gap-3 ">
+            <SideNavigationButton state={state} />
+          </div>
           <div class="text-white text-xs border-t border-white pt-3 justify-center">
             <p class="text-center font-bold">${state.money}</p>
           </div>
         </div>
       </nav>
-      <main class="overflow-scroll">
-        <div class="flex flex-wrap gap-4 p-4">
-          {state.inventory.map((entity, i) => {
-            return (
-              <div
-                class="border border-white rounded-xl w-32 h-48 px-2 py-4"
-                key={i}
-              >
-                <div class="border border-white rounded-full w-9 h-9 m-auto"></div>
-                <p class="mb-3 text-black dark:text-white text-center">
-                  {entity.attack} &gt; {state.attack}
-                </p>
-                <div class="flex gap-3 justify-center">
-                  <SellButton state={state} inventoryEntity={entity} />
-                  <EquipButton state={state} inventoryEntity={entity} />
-                </div>
-              </div>
-            );
-          })}
-        </div>
+      <main class="overflow-y-auto">
+        {state.activePanel === "lab" ? <LabPanel state={state} /> : null}
       </main>
     </div>
   );
