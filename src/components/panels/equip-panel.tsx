@@ -1,8 +1,5 @@
 import { component$ } from "@builder.io/qwik";
 import type { CountStore } from "~/routes/types";
-import { SellButton } from "~/components/button/sell-button";
-import { EquipButton } from "~/components/button/equip-button";
-import { TextStat } from "~/components/text/text-stat";
 import { SwordIcon } from "~/components/icons/sword";
 import { ShieldIcon } from "~/components/icons/shield";
 
