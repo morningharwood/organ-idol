@@ -43,11 +43,12 @@ export default component$(() => {
       });
       if (selectedEntity?.status) {
         this.setStatus(selectedEntity, "animate_out").then(() => {
+          // Hack to ensure that setTimeouts are not called immediately
           setTimeout(() => {
             this.inventory = this.inventory.filter((e: Entity) => {
               return e.id !== entity.id;
             });
-          }, 1000);
+          }, 300);
         });
       }
     }),
