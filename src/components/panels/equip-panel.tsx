@@ -13,7 +13,6 @@ const EquipPanel = component$<EquipPanelT>((props) => {
   return (
     <div class="flex flex-col gap-4">
       <h1 class={"text-4xl font-extrabold dark:text-white p-4"}>Equipment</h1>
-
       <div class={`flex flex-wrap gap-4 p-4`}>
         {slots.map(([slot, entity]) => {
           return (
