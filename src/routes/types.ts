@@ -30,7 +30,7 @@ export type GameStateT = {
   activePanel: ActivePanelT;
   labPanelNotification: number;
   researchPanelNotification: number;
-  equipPanelNotification: number;
+  equipPanelNotification: string[];
   attack: 0;
   defense: 0;
   money: 0;
@@ -40,6 +40,7 @@ export type GameStateT = {
   inventory: Entity[];
   upgrades: string[];
   time: number;
+  updateNotifications: QRL<(this: GameStateT) => void>;
   clearNotifications: QRL<(this: GameStateT, panel: ActivePanelT) => void>;
   setStatus: QRL<(entity: Entity, setStatus: Status) => void>;
   updateEquipment: QRL<(this: GameStateT, entity: Entity) => void>;

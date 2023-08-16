@@ -7,7 +7,7 @@ const GameState: GameStateT = {
   activePanel: "lab" as ActivePanelT,
   labPanelNotification: 0,
   researchPanelNotification: 0,
-  equipPanelNotification: 0,
+  equipPanelNotification: [""],
   attack: 0,
   defense: 0,
   inventoryCapacity: 3,
@@ -27,21 +27,29 @@ const GameState: GameStateT = {
       this.labPanelNotification = 0;
     }
     if (panel === "equip") {
-      this.equipPanelNotification = 0;
+      this.equipPanelNotification = Object.entries(this.equipment).map(
+        ([, value]) => {
+          return value.id;
+        }
+      );
     }
     if (panel === "research") {
       this.researchPanelNotification = 0;
     }
   }),
-  updateActivePanel: $(function (this: GameStateT, panel: ActivePanelT) {
-    if (panel === "lab") {
-      this.clearNotifications("lab");
-    }
-    if (panel === "equip" || panel === "research") {
-      this.labPanelNotification = this.inventory.length; // subtract here
-    }
-
-    this.activePanel = panel; // set active panel
+  updateNotifications: $(function (this: GameStateT) {
+    this.labPanelNotification = this.inventory.length;
+    this.equipPanelNotification = Object.entries(this.equipment).map(
+      ([, value]) => {
+        return value.id;
+      }
+    );
+    this.researchPanelNotification = this.upgrades.length;
+  }),
+  updateActivePanel: $(function (this: GameStateT, nextPanel: ActivePanelT) {
+    this.updateNotifications();
+    this.clearNotifications(nextPanel);
+    this.activePanel = nextPanel;
   }),
   updateTime: $(function (this: GameStateT, time: number) {
     this.time = time;
@@ -83,13 +91,13 @@ const GameState: GameStateT = {
   }),
   addEntityToBuffer: $(function (this: GameStateT, entity: Entity) {
     this.buffer.push(entity);
-    console.log("add", this.buffer);
   }),
   removeEntityFromBuffer: $(function (this: GameStateT) {
     this.buffer = [...this.buffer.slice(1)];
   }),
   addEntityToInventory: $(function (this: GameStateT, entity: Entity) {
     this.inventory.push(entity);
+    // this.updateNotifications();
   }),
 };
 

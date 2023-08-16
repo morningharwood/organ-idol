@@ -47,6 +47,11 @@ export default component$(() => {
       window.cancelAnimationFrame(id as number);
     });
   });
+  // const diff = useComputed$(() => {
+  //   return Object.entries(state.equipment)
+  //     .map(([, value]) => value.id)
+  //     .filter((x) => !state.equipPanelNotification.includes(x));
+  // });
 
   return (
     <div class="h-full w-full grid grid-cols-[58px_auto] overflow-hidden">
@@ -61,9 +66,13 @@ export default component$(() => {
             }`}
           >
             <span>Lab</span>
-            {state.labPanelNotification > 0 &&
+            {state.activePanel !== "lab" &&
             state.inventory.length > state.labPanelNotification ? (
-              <Badge notification={state.labPanelNotification} />
+              <Badge
+                notification={
+                  state.inventory.length - state.labPanelNotification
+                }
+              />
             ) : null}
           </button>
           <button
@@ -88,9 +97,9 @@ export default component$(() => {
             }`}
           >
             <span>Equip</span>
-            {state.equipPanelNotification > 0 ? (
-              <Badge notification={state.equipPanelNotification} />
-            ) : null}
+            {/*{state.activePanel !== "equip" && diff ? (*/}
+            {/*  <Badge notification={diff.length} />*/}
+            {/*) : null}*/}
           </button>
         </div>
         <div class="py-3 flex flex-col gap-3">
