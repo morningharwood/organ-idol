@@ -1,4 +1,4 @@
-import { InitStateEquipment } from "~/data/init-state";
+import { InitStateEquipment } from "~/data/init-equipment-state";
 import { $ } from "@builder.io/qwik";
 import type { GameStateT } from "~/routes/types";
 import type { ActivePanelT, Entity, Status } from "~/routes/types";
@@ -47,8 +47,20 @@ const GameState: GameStateT = {
     this.time = time;
   }),
   sellItem: $(function (this: GameStateT, entity: Entity) {
+    const moneyCache = this.money;
+    let count = 0;
     this.removeItemFromInventory(entity).then(() => {
-      this.money += entity.sellValue;
+      const id = setInterval(() => {
+        if (count >= 100) {
+          window.clearInterval(id);
+          count = 0;
+          this.money = moneyCache;
+          // I HAVE NO IDEA WHY IT"S OFF BY 1
+          this.money += entity.sellValue - 1;
+        }
+        this.money++;
+        count++;
+      }, 10);
     });
   }),
   setStatus: $(function (entity: Entity, newStatus: Status) {

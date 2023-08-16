@@ -10,6 +10,7 @@ const InitStateEquipmentEntity = {
   defense: 1,
   sellValue: 0,
 };
+
 const InitStateEquipment: EquipmentT = {
   head: {
     id: "0001",
