@@ -1,75 +1,21 @@
-import { $, component$, useStore, useVisibleTask$ } from "@builder.io/qwik";
+import { component$, useStore, useVisibleTask$ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 
-import type { ActivePanelT, CountStore, Entity, Status } from "~/routes/types";
+import type { Entity } from "~/routes/types";
 import { SideNavigationButton } from "~/components/button/side-navigation-button";
 import { LabPanel } from "~/components/panels/lab-panel";
 import { EquipPanel } from "~/components/panels/equip-panel";
-import { InitStateEquipment } from "~/data/init-state";
-export default component$(() => {
-  const state = useStore<CountStore>({
-    activePanel: "lab",
-    attack: 0,
-    defense: 0,
-    inventoryCapacity: 3,
-    money: 0,
-    time: 0,
-    buffer: [],
-    equipment: InitStateEquipment,
-    inventory: [],
-    upgrades: [],
-    updateEquipment: $(function (this: CountStore, entity: Entity) {
-      this.removeItemFromInventory(entity).then(() => {
-        this.equipment[entity.equipmentType] = entity;
-      });
-    }),
-    updateActivePanel: $(function (this: CountStore, panel: ActivePanelT) {
-      this.activePanel = panel;
-    }),
-    updateTime: $(function (this: CountStore, time: number) {
-      this.time = time;
-    }),
-    sellItem: $(function (this: CountStore, entity: Entity) {
-      this.removeItemFromInventory(entity).then(() => {
-        this.money += entity.sellValue;
-      });
-    }),
-    setStatus: $(function (entity: Entity, newStatus: Status) {
-      entity.status = newStatus;
-    }),
-    removeItemFromInventory: $(function (this: CountStore, entity: Entity) {
-      const selectedEntity = this.inventory.find((e) => {
-        return e.id === entity.id;
-      });
-      if (selectedEntity?.status) {
-        this.setStatus(selectedEntity, "animate_out").then(() => {
-          // Hack to ensure that setTimeouts are not called immediately
-          setTimeout(() => {
-            this.inventory = this.inventory.filter((e: Entity) => {
-              return e.id !== entity.id;
-            });
-          }, 300);
-        });
-      }
-    }),
-    addEntityToBuffer: $(function (this: CountStore, entity: Entity) {
-      this.buffer.push(entity);
-      console.log("add", this.buffer);
-    }),
-    removeEntityFromBuffer: $(function (this: CountStore) {
-      this.buffer = [...this.buffer.slice(1)];
-    }),
-    addEntityToInventory: $(function (this: CountStore, entity: Entity) {
-      this.inventory.push(entity);
-    }),
-  });
 
+import { Badge } from "~/components/button/badge";
+import { GameState } from "~/data/game-state";
+
+export default component$(() => {
+  const state = useStore(GameState);
   useVisibleTask$(({ cleanup }) => {
     let id: number;
     const execute = (entity: Entity, t: DOMHighResTimeStamp) => {
       if (entity.status === "pending") {
         entity.status = "executing";
-        console.log(entity.status);
         entity.startTime = t;
       }
       if (entity.status === "executing") {
@@ -108,13 +54,17 @@ export default component$(() => {
         <div class="pt-4 flex flex-col gap-3 text-[10px] text-white text-center">
           <button
             onClick$={() => state.updateActivePanel("lab")}
-            class={`pb-4 border-b border-white font-mono ${
+            class={`relative pb-4 border-b border-white font-mono ${
               state.activePanel === "lab"
                 ? "border-indigo-500 text-indigo-500"
                 : null
             }`}
           >
-            Lab
+            <span>Lab</span>
+            {state.labPanelNotification > 0 &&
+            state.inventory.length > state.labPanelNotification ? (
+              <Badge notification={state.labPanelNotification} />
+            ) : null}
           </button>
           <button
             onClick$={() => state.updateActivePanel("research")}
@@ -124,7 +74,10 @@ export default component$(() => {
                 : null
             }`}
           >
-            Research
+            <span>Research</span>
+            {state.researchPanelNotification > 0 ? (
+              <Badge notification={state.researchPanelNotification} />
+            ) : null}
           </button>
           <button
             onClick$={() => state.updateActivePanel("equip")}
@@ -134,7 +87,10 @@ export default component$(() => {
                 : null
             }`}
           >
-            Equip
+            <span>Equip</span>
+            {state.equipPanelNotification > 0 ? (
+              <Badge notification={state.equipPanelNotification} />
+            ) : null}
           </button>
         </div>
         <div class="py-3 flex flex-col gap-3">

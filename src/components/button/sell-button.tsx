@@ -1,9 +1,9 @@
 import { component$ } from "@builder.io/qwik";
-import type { CountStore } from "~/routes/types";
+import type { GameStateT } from "~/routes/types";
 import type { Entity } from "~/routes/types";
 
 type ButtonProps = {
-  state: CountStore;
+  state: GameStateT;
   inventoryEntity: Entity;
 };
 const SellButton = component$<ButtonProps>((props) => {

@@ -12,6 +12,7 @@ export type EquipmentType =
   | "waist"
   | "legs"
   | "feet";
+
 export type EquipmentT = {
   head: Entity;
   shoulders: Entity;
@@ -24,8 +25,12 @@ export type EquipmentT = {
   legs: Entity;
   feet: Entity;
 };
-export type CountStore = {
+
+export type GameStateT = {
   activePanel: ActivePanelT;
+  labPanelNotification: number;
+  researchPanelNotification: number;
+  equipPanelNotification: number;
   attack: 0;
   defense: 0;
   money: 0;
@@ -35,15 +40,16 @@ export type CountStore = {
   inventory: Entity[];
   upgrades: string[];
   time: number;
+  clearNotifications: QRL<(this: GameStateT, panel: ActivePanelT) => void>;
   setStatus: QRL<(entity: Entity, setStatus: Status) => void>;
-  updateEquipment: QRL<(this: CountStore, entity: Entity) => void>;
-  updateActivePanel: QRL<(this: CountStore, panel: ActivePanelT) => void>;
-  addEntityToBuffer: QRL<(this: CountStore, entity: Entity) => void>;
-  removeItemFromInventory: QRL<(this: CountStore, entity: Entity) => void>;
-  sellItem: QRL<(this: CountStore, entity: Entity) => void>;
-  removeEntityFromBuffer: QRL<(this: CountStore) => void>;
-  updateTime: QRL<(this: CountStore, time: number) => void>;
-  addEntityToInventory: QRL<(this: CountStore, entity: Entity) => void>;
+  updateEquipment: QRL<(this: GameStateT, entity: Entity) => void>;
+  updateActivePanel: QRL<(this: GameStateT, panel: ActivePanelT) => void>;
+  addEntityToBuffer: QRL<(this: GameStateT, entity: Entity) => void>;
+  removeItemFromInventory: QRL<(this: GameStateT, entity: Entity) => void>;
+  sellItem: QRL<(this: GameStateT, entity: Entity) => void>;
+  removeEntityFromBuffer: QRL<(this: GameStateT) => void>;
+  updateTime: QRL<(this: GameStateT, time: number) => void>;
+  addEntityToInventory: QRL<(this: GameStateT, entity: Entity) => void>;
 };
 export type Status =
   | "pending"

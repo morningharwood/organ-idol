@@ -1,10 +1,10 @@
-import type { CountStore } from "~/routes/types";
+import type { GameStateT } from "~/routes/types";
 import { component$ } from "@builder.io/qwik";
 import { SellButton } from "~/components/button/sell-button";
 import { EquipButton } from "~/components/button/equip-button";
 
 export type LabPanelT = {
-  state: CountStore;
+  state: GameStateT;
 };
 
 const LabPanel = component$<LabPanelT>((props) => {

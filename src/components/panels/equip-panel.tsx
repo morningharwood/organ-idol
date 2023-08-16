@@ -1,10 +1,10 @@
 import { component$ } from "@builder.io/qwik";
-import type { CountStore } from "~/routes/types";
+import type { GameStateT } from "~/routes/types";
 import { SwordIcon } from "~/components/icons/sword";
 import { ShieldIcon } from "~/components/icons/shield";
 
 type EquipPanelT = {
-  state: CountStore;
+  state: GameStateT;
 };
 const EquipPanel = component$<EquipPanelT>((props) => {
   const { state } = props;

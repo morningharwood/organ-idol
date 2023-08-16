@@ -1,10 +1,10 @@
 import { $, component$ } from "@builder.io/qwik";
-import type { CountStore, Entity } from "~/routes/types";
+import type { GameStateT, Entity } from "~/routes/types";
 import { ItemProgress } from "~/components/item-progress/item-progress";
 import range from "just-range";
 import shuffle from "just-shuffle";
 type ButtonProps = {
-  state: CountStore;
+  state: GameStateT;
 };
 const SideNavigationButton = component$<ButtonProps>((props) => {
   const { state } = props;

@@ -1,6 +1,6 @@
-import type { CountStore, Entity } from "~/routes/types";
+import type { GameStateT, Entity } from "~/routes/types";
 
 export type ButtonProps = {
-  state: CountStore;
+  state: GameStateT;
   inventoryEntity: Entity;
 };
