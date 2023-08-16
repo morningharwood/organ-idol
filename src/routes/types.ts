@@ -40,6 +40,8 @@ export type GameStateT = {
   inventory: Entity[];
   upgrades: string[];
   time: number;
+  playSellSound: QRL<(this: GameStateT) => void>;
+  playEquipSound: QRL<(this: GameStateT) => void>;
   updateNotifications: QRL<(this: GameStateT) => void>;
   clearNotifications: QRL<(this: GameStateT, panel: ActivePanelT) => void>;
   setStatus: QRL<(entity: Entity, setStatus: Status) => void>;
